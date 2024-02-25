@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Rating {
 
-    private Long ratingId;
+    private String ratingId;
     private Long userId;
     private String hotelId;
     private int rating;
