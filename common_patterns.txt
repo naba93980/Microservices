@@ -1,0 +1,33 @@
+1. Communication Patterns:  API Gateway, Messaging, Event-Driven Architecture
+
+
+2. Data Management Patterns: Database per Service/Decentralized, API Composition, CQRS (Command Query Responsibility Segregation), Shared database
+
+
+3. Deployment Patterns: Containerization, Service Discovery
+
+
+4. Observability Patterns: Distributed Tracing, Logging and Monitoring
+
+
+5. Resilience patterns: Circuit Breaker, Retry pattern, Bulkhead pattern, Timeout pattern
+
+
+6. Integration Patterns: API Composition, Event Sourcing, Saga pattern
+
+
+7. Security Patterns: Authentication and Authorization, API Gateway, Least Privilege
+
+
+8. Testing Patterns: Consumer-Driven Contract Testing (CDCT), Chaos Engineering, Contract Testing
+
+
+9. Otherpattern: Cache aside, Backpressure
+
+
+
+				
+
+
+
+
