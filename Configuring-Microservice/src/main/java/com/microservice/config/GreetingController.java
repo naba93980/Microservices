@@ -1,5 +1,8 @@
 package com.microservice.config;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,12 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-    @Value("${my.greeting}")
+    @Value("${my.greeting:defaultValue}")
     private String greeting;
+
+    @Value("static data hai")
+    private String staticData;
+
+    @Value("${app.list.demo}")
+    private List<String> listData;
+
+    @Value("#{${dbValues}}")
+    private Map<String, String> mapData;
 
     @GetMapping("/greeting")
     String getGreeting(){
-        return greeting;
+        return greeting + " " + staticData + " " + listData + " " + mapData;
     }
     
 }
