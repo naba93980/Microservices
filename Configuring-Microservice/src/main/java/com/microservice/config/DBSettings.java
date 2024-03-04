@@ -11,7 +11,8 @@ import lombok.Setter;
 @Setter
 @Configuration
 @ConfigurationProperties("db")
-@Profile("derfault")
+// @Profile("derfault")
+@Profile("dev")
 public class DBSettings {
 
     private String connection;
