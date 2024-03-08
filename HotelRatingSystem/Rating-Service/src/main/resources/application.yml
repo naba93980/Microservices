@@ -6,7 +6,7 @@ spring:
     name: Rating-Service
   data:
     mongodb:
-      uri: mongodb+srv://root:pRKR0rabL2UKEWr0@cluster0.2yyj6si.mongodb.net/rating_service
+      uri: mongodb+srv://root:Txw7IFucZAGpDz82@cluster0.2yyj6si.mongodb.net/rating_service
 
 eureka:
   instance:
