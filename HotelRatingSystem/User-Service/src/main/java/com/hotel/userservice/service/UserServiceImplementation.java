@@ -17,6 +17,8 @@ import com.hotel.userservice.entities.Rating;
 import com.hotel.userservice.entities.User;
 import com.hotel.userservice.error.ResourceNotFoundException;
 import com.hotel.userservice.error.SomethingWentWrongException;
+import com.hotel.userservice.external.services.HotelService;
+import com.hotel.userservice.external.services.RatingService;
 import com.hotel.userservice.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +31,11 @@ public class UserServiceImplementation implements UserService {
 
   UserRepository userRepository;
 
-  RestTemplate restTemplate;
+  // RestTemplate restTemplate;
+
+  HotelService hotelService;
+
+  RatingService ratingService;
 
   @Override
   public User createUser(User user) {
@@ -40,26 +46,68 @@ public class UserServiceImplementation implements UserService {
     }
   }
 
+  /*
+   * @Override
+   * public User getUser(Long userId) {
+   * User user = userRepository.findById(userId).orElseThrow(() -> new
+   * ResourceNotFoundException("No such User found"));
+   * ResponseEntity<List<Rating>> response = restTemplate.exchange(
+   * "http://rating-service/ratings/getRatingByUserId?userId=" + userId,
+   * HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {});
+   * List<Rating> ratings = response.getBody();
+   * user.setRatings(ratings);
+   * return user;
+   * }
+   */
+
   @Override
   public User getUser(Long userId) {
     User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No such User found"));
-    ResponseEntity<List<Rating>> response = restTemplate.exchange("http://rating-service/ratings/getRatingByUserId?userId=" + userId, HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {});
-    List<Rating> ratings = response.getBody();
+    List<Rating> ratings = ratingService.getRatingByUserId(user.getUserId());
+    ratings = ratings.stream().map(rating -> {
+      Hotel hotel = hotelService.getHotel(rating.getHotelId());
+      rating.setHotel(hotel);
+      return rating;
+    }).collect(Collectors.toList());
     user.setRatings(ratings);
     return user;
   }
+
+  /*
+   * @Override
+   * public List<User> getAllUsers() {
+   * try {
+   * return userRepository.findAll().stream().map(user -> {
+   * ResponseEntity<List<Rating>> response = restTemplate.exchange(
+   * "http://rating-service/ratings/getRatingByUserId?userId=" + user.getUserId(),
+   * HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {});
+   * List<Rating> ratings = response.getBody();
+   * ratings = ratings.stream().map(rating -> {
+   * Hotel hotel =
+   * restTemplate.getForObject("http://hotel-service/hotels/getHotel?hotelId=" +
+   * rating.getHotelId(), Hotel.class);
+   * rating.setHotel(hotel);
+   * return rating;
+   * }).collect(Collectors.toList());
+   * user.setRatings(ratings);
+   * return user;
+   * }).collect(Collectors.toList());
+   * } catch (RuntimeException e) {
+   * throw new ResourceNotFoundException("Something went wrong, could not fetch");
+   * }
+   * }
+   */
 
   @Override
   public List<User> getAllUsers() {
     try {
       return userRepository.findAll().stream().map(user -> {
-        ResponseEntity<List<Rating>> response = restTemplate.exchange("http://rating-service/ratings/getRatingByUserId?userId=" + user.getUserId(), HttpMethod.GET, null, new ParameterizedTypeReference<List<Rating>>() {});
-        List<Rating> ratings = response.getBody();
-          ratings = ratings.stream().map(rating -> {
-            Hotel hotel = restTemplate.getForObject("http://hotel-service/hotels/getHotel?hotelId=" + rating.getHotelId(), Hotel.class);
-            rating.setHotel(hotel);
-            return rating;
-          }).collect(Collectors.toList());
+        List<Rating> ratings = ratingService.getRatingByUserId(user.getUserId());
+        ratings = ratings.stream().map(rating -> {
+          Hotel hotel = hotelService.getHotel(rating.getHotelId());
+          rating.setHotel(hotel);
+          return rating;
+        }).collect(Collectors.toList());
         user.setRatings(ratings);
         return user;
       }).collect(Collectors.toList());
