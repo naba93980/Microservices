@@ -1,6 +1,16 @@
 spring:
   application:
     name: API-Gateway
+  cloud:
+    gateway:
+      routes:
+      - id: rating-service
+        uri: lb://Rating-Service
+        predicates:
+        - Host=localhost
+        - Path=/ratings/**
+        filters:
+        - AddResponseHeader=Server, Netty
 
 server:
   port: 9080
@@ -13,6 +23,8 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+
 
 debug: true
     
