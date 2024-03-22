@@ -10,7 +10,7 @@
 4. Observability Patterns: Distributed Tracing, Logging and Monitoring
 
 
-5. Resilience patterns: Circuit Breaker, Retry pattern, Bulkhead pattern, Timeout pattern
+5. Resilience patterns: Circuit Breaker, Retry pattern, Bulkhead pattern, Timeout pattern, Ratelimiter pattern, Caching pattern
 
 
 6. Integration Patterns: API Composition, Event Sourcing, Saga pattern
