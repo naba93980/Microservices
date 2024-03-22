@@ -1,11 +1,9 @@
 server:
   port: 8082
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/rating_service
-    username: postgres
-    password: 12345678
-    driver-class-name: org.postgresql.Driver
+  data:
+    mongodb:
+      uri: mongodb+srv://<username>:<password>@cluster0.2yyj6si.mongodb.net/rating_service
   jpa:
     hibernate:
       ddl-auto: update
