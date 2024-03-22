@@ -4,10 +4,6 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://<username>:<password>@cluster0.2yyj6si.mongodb.net/rating_service
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
 eureka:
   instance:
     prefer-ip-address: true
