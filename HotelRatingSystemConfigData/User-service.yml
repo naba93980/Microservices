@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: User-service
+  profiles:
+    active: dev  
+
