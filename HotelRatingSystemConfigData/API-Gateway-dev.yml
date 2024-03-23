@@ -1,0 +1,14 @@
+server:
+  port: 9080
+  
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: rating-service
+          uri: lb://Rating-Service
+          predicates:
+            - Host=localhost
+            - Path=/ratings/**
+          filters:
+            - AddResponseHeader=Server, Netty

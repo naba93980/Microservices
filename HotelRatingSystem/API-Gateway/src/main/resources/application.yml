@@ -1,30 +1,9 @@
 spring:
   application:
     name: API-Gateway
-  cloud:
-    gateway:
-      routes:
-      - id: rating-service
-        uri: lb://Rating-Service
-        predicates:
-        - Host=localhost
-        - Path=/ratings/**
-        filters:
-        - AddResponseHeader=Server, Netty
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8888
 
-server:
-  port: 9080
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-
-
-
-debug: true
     

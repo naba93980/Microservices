@@ -1,18 +1,8 @@
-server:
-  port: 8082
-
 spring:
   application:
     name: Rating-Service
-  data:
-    mongodb:
-      uri: mongodb+srv://root:Txw7IFucZAGpDz82@cluster0.2yyj6si.mongodb.net/rating_service
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+  profiles:
+    active: dev
+  config:
+    import:
+    - configserver:http://localhost:8888
