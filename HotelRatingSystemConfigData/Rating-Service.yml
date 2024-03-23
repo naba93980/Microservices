@@ -1,5 +1,4 @@
 spring:
   application:
     name: Rating-Service
-  profiles:
-    active: dev
+  
