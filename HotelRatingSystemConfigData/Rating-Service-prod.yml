@@ -3,7 +3,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://<username>:<password>@cluster0.2yyj6si.mongodb.net/rating_service
+      uri: mongodb+srv://root:Txw7IFucZAGpDz82@cluster0.2yyj6si.mongodb.net/rating_service
 eureka:
   instance:
     prefer-ip-address: true
