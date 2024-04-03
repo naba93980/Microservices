@@ -1,8 +1,8 @@
-package com.hystrix.demo.HystrixDemo.service;
+package com.hystrix.demo.hystrixdemo.service;
 
 import java.util.List;
 
-import com.hystrix.demo.HystrixDemo.entities.User;
+import com.hystrix.demo.hystrixdemo.entities.User;
 
 public interface UserService {
     

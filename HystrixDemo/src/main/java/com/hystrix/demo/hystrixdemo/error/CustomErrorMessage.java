@@ -1,4 +1,4 @@
-package com.hystrix.demo.HystrixDemo.error;
+package com.hystrix.demo.hystrixdemo.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

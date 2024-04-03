@@ -1,4 +1,4 @@
-package com.hystrix.demo.HystrixDemo.error;
+package com.hystrix.demo.hystrixdemo.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

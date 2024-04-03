@@ -1,4 +1,4 @@
-package com.hystrix.demo.HystrixDemo.entities;
+package com.hystrix.demo.hystrixdemo.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

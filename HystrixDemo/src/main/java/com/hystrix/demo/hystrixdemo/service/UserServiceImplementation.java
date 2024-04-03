@@ -1,13 +1,13 @@
-package com.hystrix.demo.HystrixDemo.service;
+package com.hystrix.demo.hystrixdemo.service;
 
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hystrix.demo.HystrixDemo.entities.User;
-import com.hystrix.demo.HystrixDemo.error.ResourceNotFoundException;
-import com.hystrix.demo.HystrixDemo.error.SomethingWentWrongException;
-import com.hystrix.demo.HystrixDemo.repositories.UserRepository;
+import com.hystrix.demo.hystrixdemo.entities.User;
+import com.hystrix.demo.hystrixdemo.error.ResourceNotFoundException;
+import com.hystrix.demo.hystrixdemo.error.SomethingWentWrongException;
+import com.hystrix.demo.hystrixdemo.repositories.UserRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +31,7 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
+  @HystrixCommand(fallbackMethod = "getUserFallback")
   public User getUser(Long userId) {
     return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No such User found"));
   }

@@ -1,4 +1,4 @@
-package com.hystrix.demo.HystrixDemo.error;
+package com.hystrix.demo.hystrixdemo.error;
 
 public class SomethingWentWrongException extends RuntimeException {
     

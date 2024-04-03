@@ -1,4 +1,4 @@
-package com.hystrix.demo.HystrixDemo.controller;
+package com.hystrix.demo.hystrixdemo.controller;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hystrix.demo.HystrixDemo.entities.User;
-import com.hystrix.demo.HystrixDemo.service.UserService;
+import com.hystrix.demo.hystrixdemo.entities.User;
+import com.hystrix.demo.hystrixdemo.service.UserService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 import lombok.AllArgsConstructor;
