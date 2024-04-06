@@ -1,15 +1,17 @@
-package com.hystrix.demo.hystrixdemo.service;
+package com.resilience.demo.resilience4j.service;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hystrix.demo.hystrixdemo.entities.User;
-import com.hystrix.demo.hystrixdemo.error.ResourceNotFoundException;
-import com.hystrix.demo.hystrixdemo.error.SomethingWentWrongException;
-import com.hystrix.demo.hystrixdemo.repositories.UserRepository;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
+import com.resilience.demo.resilience4j.entities.User;
+import com.resilience.demo.resilience4j.error.ResourceNotFoundException;
+import com.resilience.demo.resilience4j.error.SomethingWentWrongException;
+import com.resilience.demo.resilience4j.repositories.UserRepository;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -31,19 +33,27 @@ public class UserServiceImplementation implements UserService {
   }
 
   @Override
-  @HystrixCommand(fallbackMethod = "getUserFallback")
+  @CircuitBreaker(name = "getUserById", fallbackMethod = "getUserFallback")
   public User getUser(Long userId) {
-    return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No such User found"));
+    return userRepository.findById(userId).get();
+  }
+  
+  public User getUserFallback(Long userId, Exception e) { 
+    return new User(0L, "FallbackName", "FallbackEmail", "FallbackAbout");
   }
 
   @Override
-  @HystrixCommand(fallbackMethod = "getAllUsersFallback")
+  @CircuitBreaker(name = "getAllUsers", fallbackMethod = "getAllUsersFallback")
   public List<User> getAllUsers() {
-    try {
       return userRepository.findAll();
-    } catch (RuntimeException e) {
-      throw new ResourceNotFoundException("Something went wrong, could not fetch");
-    }
+  }
+  
+  public List<User> getAllUsersFallback(Exception e) {
+    return Arrays.asList(
+      new User(0L, "FallbackName1", "FallbackEmail1", "FallbackAbout1"),
+      new User(0L, "FallbackName2", "FallbackEmail2", "FallbackAbout2"),
+      new User(0L, "FallbackName3", "FallbackEmail3", "FallbackAbout3")
+    );
   }
 
   @Override

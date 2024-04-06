@@ -1,4 +1,4 @@
-package com.hystrix.demo.hystrixdemo.error;
+package com.resilience.demo.resilience4j.error;
 
 public class SomethingWentWrongException extends RuntimeException {
     

@@ -1,4 +1,4 @@
-package com.hystrix.demo.hystrixdemo.entities;
+package com.resilience.demo.resilience4j.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

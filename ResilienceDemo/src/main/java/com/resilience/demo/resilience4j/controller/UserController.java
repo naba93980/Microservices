@@ -1,4 +1,4 @@
-package com.hystrix.demo.hystrixdemo.controller;
+package com.resilience.demo.resilience4j.controller;
 
 import java.util.List;
 
@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hystrix.demo.hystrixdemo.entities.User;
-import com.hystrix.demo.hystrixdemo.service.UserService;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.resilience.demo.resilience4j.entities.User;
+import com.resilience.demo.resilience4j.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -42,7 +41,6 @@ public class UserController {
     }
     
     @GetMapping("/getAllUsers")
-    @HystrixCommand(fallbackMethod = "getAllUsersFallback")
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getAllUsers();
         return ResponseEntity.status(HttpStatus.OK).body(users);
@@ -59,4 +57,6 @@ public class UserController {
         String users = userService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
+
+    
 }

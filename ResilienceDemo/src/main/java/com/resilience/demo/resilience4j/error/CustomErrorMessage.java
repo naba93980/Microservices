@@ -1,4 +1,4 @@
-package com.hystrix.demo.hystrixdemo.error;
+package com.resilience.demo.resilience4j.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

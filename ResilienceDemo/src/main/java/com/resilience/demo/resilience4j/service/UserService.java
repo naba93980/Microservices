@@ -1,8 +1,8 @@
-package com.hystrix.demo.hystrixdemo.service;
+package com.resilience.demo.resilience4j.service;
 
 import java.util.List;
 
-import com.hystrix.demo.hystrixdemo.entities.User;
+import com.resilience.demo.resilience4j.entities.User;
 
 public interface UserService {
     

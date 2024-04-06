@@ -1,4 +1,4 @@
-package com.hystrix.demo.hystrixdemo.error;
+package com.resilience.demo.resilience4j.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

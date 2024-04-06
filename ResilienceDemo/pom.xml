@@ -9,11 +9,11 @@
 		<version>3.2.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.hystrix.demo</groupId>
-	<artifactId>HystrixDemo</artifactId>
+	<groupId>com.resilience.demo</groupId>
+	<artifactId>ResilienceDemo</artifactId>
 	<version>1.0.0</version>
-	<name>HystrixDemo</name>
-	<description>Demo project for hystrix</description>
+	<name>ResilienceDemo</name>
+	<description>Demo project for resilience</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
@@ -29,15 +29,26 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Add Hystrix dependency here -->
+		<!-- Add Resilience4j dependency here -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-			<version>2.2.9.RELEASE</version>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<!-- Add Lombok dependency here -->
 		<dependency>
