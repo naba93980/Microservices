@@ -2,8 +2,7 @@ spring:
   application:
     name: User-Service
   profiles:
-    active:
-    - dev
+    active: dev
   config:
     import:
     - configserver:http://localhost:8888
