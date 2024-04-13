@@ -71,12 +71,27 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-micrometer</artifactId>
+			<version>12.3</version>
+		</dependency>
 		<!-- reporter library -->
 		<dependency>
 			<groupId>io.zipkin.reporter2</groupId>
 			<artifactId>zipkin-reporter-brave</artifactId>
 		</dependency>
-	</dependencies>
+	
+	<!-- Resilience4j -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-aop</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+	</dependency>
+</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -88,7 +103,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -105,5 +119,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

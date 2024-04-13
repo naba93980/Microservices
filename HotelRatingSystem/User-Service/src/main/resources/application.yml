@@ -7,3 +7,65 @@ spring:
   config:
     import:
     - configserver:http://localhost:8888
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:  # applies to all feign clients
+            connectTimeout: 2000
+            readTimeout: 2000
+      circuitbreaker:
+        enabled: true
+        alphanumeric-ids:
+          enabled: true
+
+resilience4j.circuitbreaker:
+    configs:
+        default:
+            registerHealthIndicator: true
+    instances:
+        RatingServicegetRatingByUserIdLong:
+            baseConfig: default
+            slidingWindowSize: 60
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 5
+            failureRateThreshold: 50
+            waitDurationInOpenState: 20s
+            permittedNumberOfCallsInHalfOpenState: 3
+        HotelServicegetHotelLong:
+            slidingWindowSize: 60
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 5
+            failureRateThreshold: 50
+            waitDurationInOpenState: 20s
+            permittedNumberOfCallsInHalfOpenState: 3
+
+resilience4j.timelimiter:
+    instances:
+        RatingServicegetRatingByUserIdLong:
+            timeoutDuration: 2s
+        HotelServicegetHotelLong:
+            timeoutDuration: 1s
+            
+        
+# resilience4j.ratelimiter:
+#     instances:
+#         backendA:
+#             limitForPeriod: 10
+#             limitRefreshPeriod: 1s
+#             timeoutDuration: 0
+#             registerHealthIndicator: true
+#             eventConsumerBufferSize: 100
+#         backendB:
+#             limitForPeriod: 6
+#             limitRefreshPeriod: 500ms
+#             timeoutDuration: 3s
+            
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
