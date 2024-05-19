@@ -19,13 +19,15 @@ spring:
         enabled: true
         alphanumeric-ids:
           enabled: true
+          
 
 resilience4j.circuitbreaker:
     configs:
         default:
             registerHealthIndicator: true
+    # circuitBreakerAspectOrder: 1
     instances:
-        RatingServicegetRatingByUserIdLong:
+        ratingService:
             baseConfig: default
             slidingWindowSize: 60
             slidingWindowType: TIME_BASED
@@ -33,34 +35,45 @@ resilience4j.circuitbreaker:
             failureRateThreshold: 50
             waitDurationInOpenState: 20s
             permittedNumberOfCallsInHalfOpenState: 3
-        HotelServicegetHotelLong:
+        hotelService:
             slidingWindowSize: 60
             slidingWindowType: TIME_BASED
-            minimumNumberOfCalls: 5
+            minimumNumberOfCalls: 10
             failureRateThreshold: 50
             waitDurationInOpenState: 20s
-            permittedNumberOfCallsInHalfOpenState: 3
+            permittedNumberOfCallsInHalfOpenState: 6
 
 resilience4j.timelimiter:
     instances:
-        RatingServicegetRatingByUserIdLong:
+        ratingService:
             timeoutDuration: 2s
-        HotelServicegetHotelLong:
+        hotelService:
             timeoutDuration: 1s
             
+
+resilience4j.retry:
+    # retryAspectOrder: 2
+    instances:
+      ratingService:
+        max-attempts: 3
+        waitDuration: 1000ms
+      hotelService:
+        max-attempts: 4
+        waitDuration: 1000ms
+  
         
-# resilience4j.ratelimiter:
-#     instances:
-#         backendA:
-#             limitForPeriod: 10
-#             limitRefreshPeriod: 1s
-#             timeoutDuration: 0
-#             registerHealthIndicator: true
-#             eventConsumerBufferSize: 100
-#         backendB:
-#             limitForPeriod: 6
-#             limitRefreshPeriod: 500ms
-#             timeoutDuration: 3s
+resilience4j.ratelimiter:
+    instances:
+        hotelService:
+            limitForPeriod: 5
+            limitRefreshPeriod: 100s
+            timeoutDuration: 5s
+            registerHealthIndicator: true
+            subscribe-for-events: true
+        ratingService:
+            limitForPeriod: 6
+            limitRefreshPeriod: 500ms
+            timeoutDuration: 3s
             
 
 
@@ -69,3 +82,5 @@ management:
     web:
       exposure:
         include: "*"
+
+debug: true
