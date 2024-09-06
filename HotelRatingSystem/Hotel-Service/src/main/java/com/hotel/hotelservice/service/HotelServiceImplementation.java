@@ -3,6 +3,10 @@ package com.hotel.hotelservice.service;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.hotel.hotelservice.entities.Hotel;
@@ -16,25 +20,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
-public class HotelServiceImplementation implements HotelService{
+@CacheConfig(cacheNames = ":hotels")
+public class HotelServiceImplementation implements HotelService {
 
-    HotelRepositoy hotelRepositoy;
+  HotelRepositoy hotelRepositoy;
 
-    @Override
+  @Override
   public Hotel createHotel(Hotel hotel) {
     try {
-       return hotelRepositoy.save(hotel);
+      return hotelRepositoy.save(hotel);
     } catch (RuntimeException e) {
       throw new SomethingWentWrongException("Something went wrong, could not create");
     }
   }
 
   @Override
-  public Hotel getHotel(Long userId) {
-    return hotelRepositoy.findById(userId).orElseThrow(() -> new ResourceNotFoundException("No such User found"));
+  @Cacheable(key = "#hotelId")
+  public Hotel getHotel(Long hotelId) {
+    return hotelRepositoy.findById(hotelId).orElseThrow(() -> new ResourceNotFoundException("No such Hotel found"));
   }
 
-   @Override
+  @Override
+  @Cacheable(key = "'allHotels'")
   public List<Hotel> getAllHotels() {
     try {
       return hotelRepositoy.findAll();
@@ -44,29 +51,27 @@ public class HotelServiceImplementation implements HotelService{
   }
 
   @Override
+  @CachePut(key = "#hotel.hotelId")
   public Hotel updateHotel(Hotel hotel) {
-    Hotel existingUser = hotelRepositoy.findById(hotel.getHotelId()).orElseThrow(() -> new ResourceNotFoundException("No such Hotel found"));
+    Hotel existingHotel = hotelRepositoy.findById(hotel.getHotelId())
+        .orElseThrow(() -> new ResourceNotFoundException("No such Hotel found"));
     try {
-      BeanUtils.copyProperties(hotel, existingUser);
-      return hotelRepositoy.save(existingUser);
+      BeanUtils.copyProperties(hotel, existingHotel);
+      return hotelRepositoy.save(existingHotel);
     } catch (RuntimeException e) {
       throw new SomethingWentWrongException("Something went wrong, could not update");
     }
   }
 
   @Override
-  public String deleteHotel(Long userId) {
+  @CacheEvict(key = "#hotelId")
+  public String deleteHotel(Long hotelId) {
     try {
-      hotelRepositoy.deleteById(userId);
+      hotelRepositoy.deleteById(hotelId);
       return "Deletion successful";
     } catch (RuntimeException e) {
       throw new SomethingWentWrongException("Something went wrong, could not delete");
     }
   }
 
-
-   
-
-  
-    
 }

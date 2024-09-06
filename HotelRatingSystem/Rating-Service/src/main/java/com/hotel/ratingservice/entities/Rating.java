@@ -1,5 +1,7 @@
 package com.hotel.ratingservice.entities;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Document("ratings_collection")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating {
+public class Rating implements Serializable{
 
     @Id
     private String ratingId;

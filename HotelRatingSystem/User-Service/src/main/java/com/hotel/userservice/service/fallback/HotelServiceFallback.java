@@ -10,7 +10,10 @@ public class HotelServiceFallback implements HotelService {
 
     @Override
     public Hotel getHotel(Long hotelId) {
-        return Hotel.builder().hotelId(hotelId).name("Hotel not found").location("Location not found").about("About not found").build();
+        return Hotel.builder().hotelId(hotelId).name("Hotel not found feign").location("Location not found").about("About not found").build();
     }
+
+    
+
 
 }

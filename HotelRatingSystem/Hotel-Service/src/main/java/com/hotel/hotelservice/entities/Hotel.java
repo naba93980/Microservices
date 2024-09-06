@@ -1,5 +1,6 @@
 package com.hotel.hotelservice.entities;
 
+import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hotel {
+public class Hotel implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE )

@@ -5,4 +5,18 @@ spring:
     active: dev
   config:
     import:
-    - configserver:http://localhost:8888
+      - configserver:http://localhost:8888
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    cache-names:
+      - ratings
+    type: redis
+    redis:
+      time-to-live: 30s
+      use-key-prefix: true
+      key-prefix: hotel-rating-system:ratings-service
+      cache-null-values: true
