@@ -1,33 +1,27 @@
 package com.hotel.userservice.external.services;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 import com.hotel.userservice.entities.Hotel;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
+import com.hotel.userservice.external.services.client.HotelClient;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@FeignClient(name = "Hotel-Service")
-public interface HotelService {
+@Component
+@NoArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+@CacheConfig(cacheNames = "hotels")
+public class HotelService {
 
-    @GetMapping("/hotels/getHotel")
-    // @Retry(name = "hotelService") // 3rd to evaluate
-    @Retry(name = "hotelService", fallbackMethod = "getHotelRetryFallback")
+    HotelClient hotelClient;
 
-    // @CircuitBreaker(name = "hotelService", fallbackMethod = "getHotelCBFallback") // 2nd to evaluate
-    @CircuitBreaker(name = "hotelService")
-    
-    @RateLimiter(name = "hotelService") // 1st to evaluate
-    Hotel getHotel(@RequestParam Long hotelId);
-
-    default Hotel getHotelCBFallback(Long hotelId, Exception e) {
-        return Hotel.builder().hotelId(hotelId).name("Hotel not found cb").location("Location not found").about("About not found").build();
-    }
-
-    default Hotel getHotelRetryFallback(Long hotelId, Exception e) {
-        return Hotel.builder().hotelId(hotelId).name("Hotel not found retry").location("Location not found").about("About not found").build();
+    //@CustomCache(key = "#hotelId", ttl1 = 10, ttl2 = 60)
+    @Cacheable(key = "#hotelId")
+    public Hotel getHotel(Long hotelId) {
+        return hotelClient.getHotel(hotelId);
     }
 
 }

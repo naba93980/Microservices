@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
-@CacheConfig(cacheNames = ":hotels")
+@CacheConfig(cacheNames = "hotels")
 public class HotelServiceImplementation implements HotelService {
 
   HotelRepositoy hotelRepositoy;

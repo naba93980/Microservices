@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 
@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
+@CacheConfig(cacheNames = "users")
 public class UserServiceImplementation implements UserService {
 
   UserRepository userRepository;

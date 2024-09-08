@@ -1,5 +1,7 @@
 package com.hotel.userservice.entities;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Hotel {
+public class Hotel implements Serializable{
     
     private Long hotelId;
     private String name;

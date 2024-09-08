@@ -18,5 +18,5 @@ spring:
     redis:
       time-to-live: 30s
       use-key-prefix: true
-      key-prefix: hotel-rating-system:hotels-service
+      key-prefix: 'hotel-rating-system:hotels-service:'
       cache-null-values: true
